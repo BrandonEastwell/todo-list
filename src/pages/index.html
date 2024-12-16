@@ -10,12 +10,27 @@
 <body>
     <header>
         <nav>
-            <button>Home</button>
-            <button>Menu</button>
-            <button>About</button>
+
         </nav>
     </header>
     <div id="content">
+        <form id="todo-list-form">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Name" required>
+            <label for="desc">Description</label>
+            <input type="text" name="desc" id="desc" placeholder="Description">
+            <label for="date">Description</label>
+            <input type="date" name="date" id="date">
+            <label for="priority">Description</label>
+            <select id="priority" name="priority" required>
+                <option value="Very High">Very High</option>
+                <option value="High">High</option>
+                <option value="Normal">Normal</option>
+                <option value="Low">Low</option>
+                <option value="Very Low">Very Low</option>
+            </select>
+            <button type="submit" id="submit" name="submit">SUBMIT</button>
+        </form>
     </div>
 </body>
 </html>
