@@ -1,4 +1,6 @@
-class FormManager {
+import formList from "./formList";
+
+export default class FormManager {
     constructor(controller) {
         this.controller = controller;
     }

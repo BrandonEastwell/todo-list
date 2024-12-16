@@ -1,6 +1,6 @@
-import TodoList from "./todoList";
-import TodoItem from "./todoItem";
-import Project from "./project";
+import TodoListObj from "./todoListObj";
+import TodoItem from "./todoItemObj";
+import ProjectObj from "./projectObj";
 
 export default class Controller {
     constructor() {
@@ -9,7 +9,7 @@ export default class Controller {
     }
 
     createProject(title, desc, dueDate) {
-        const project = new Project(title, desc, dueDate);
+        const project = new ProjectObj(title, desc, dueDate);
         this.addProjectToList(project);
     }
 
@@ -18,7 +18,7 @@ export default class Controller {
     }
 
     createTodoList(name, desc, dueDate, priority) {
-        this.todoLists.push(new TodoList(name, desc, dueDate, priority));
+        this.todoLists.push(new TodoListObj(name, desc, dueDate, priority));
     }
 
     addTodoListItem(listName) {

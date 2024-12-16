@@ -1,4 +1,4 @@
-export default class Project {
+export default class ProjectObj {
     constructor(title, desc, dueDate) {
         this.title = title;
         this.desc = desc;

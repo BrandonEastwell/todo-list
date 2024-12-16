@@ -1,3 +1,3 @@
-export default function TodoPage(container) {
+export default function Todos(controller, container) {
 
 }
