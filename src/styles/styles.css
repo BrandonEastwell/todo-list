@@ -19,10 +19,52 @@ nav {
     align-content: center;
 }
 
-#main {
+#content {
     grid-column: 2 / 3;
     background-color: whitesmoke;
     overflow-y: scroll;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    padding: 20px;
+    gap: 20px;
+}
+
+.home-card-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    height: 100%;
+    padding: 20px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+.form-container {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    height: 60vh;
+    width: 40vw;
+    position: fixed;
+    bottom: 30%;
+    left: 30%;
+    padding: 25px;
+}
+
+.form-row {
+    width: 100%;
+    display: grid;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    grid-template-columns: 1fr 2fr;
+}
+
+.form-submit-row {
+    width: 25%;
+    display: grid;
+    margin: 25px auto auto auto
+;
 }

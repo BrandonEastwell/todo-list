@@ -1,12 +1,13 @@
-import formList from "./formList";
+import formList from "./form-list";
 
 export default class FormManager {
-    constructor(controller) {
+    constructor(controller, pageManager) {
         this.controller = controller;
+        this.pageManager = pageManager;
     }
 
     displayTodoForm() {
-        const form = formList('todo');
+        const form = formList();
         if (form) {
             form.addEventListener("submit", this.handleTodoSubmit.bind(this));
             document.body.appendChild(form);
@@ -14,7 +15,7 @@ export default class FormManager {
     }
 
     displayProjectForm() {
-        const form = formList('project');
+        const form = formList();
         if (form) {
             form.addEventListener("submit", this.handleProjectSubmit.bind(this));
             document.body.appendChild(form);
@@ -30,6 +31,10 @@ export default class FormManager {
             data.get("dueDate"),
             data.get("priority")
         );
+
+        //page refresh
+        this.pageManager.updateDisplay(this.controller);
+        console.log("todo form submitted...");
     }
 
     handleProjectSubmit(event) {
@@ -39,5 +44,9 @@ export default class FormManager {
             data.get("name"),
             data.get("desc")
         );
+
+        //page refresh
+        this.pageManager.updateDisplay(this.controller);
+        console.log("project form submitted...");
     }
 }

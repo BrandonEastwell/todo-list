@@ -1,13 +1,12 @@
 import Controller from "./controller";
-import FormManager from "./formManager";
-import PageManager from "./pageManager";
+import FormManager from "./form-manager";
+import PageManager from "./page-manager";
 
 export default function DOM() {
     const controller = new Controller();
     const contentContainer = document.getElementById('content');
-    const formManager = new FormManager(controller);
     const pageManager = new PageManager(contentContainer);
-
+    const formManager = new FormManager(controller, pageManager);
 
     const addListBtn = document.getElementById('add-todo-btn');
     //const addListItemBtn = document.getElementById();
@@ -18,25 +17,25 @@ export default function DOM() {
 
     addListBtn.addEventListener("click", () => {
         formManager.displayTodoForm();
-        pageManager.updateDisplay(controller);
     });
 
     addProjectBtn.addEventListener("click", () => {
         formManager.displayProjectForm();
-        pageManager.updateDisplay(controller);
     })
 
     //addListItemBtn.addEventListener("click", displayForm);
     todosBtn.addEventListener("click", () => {
-        pageManager.displayTodoPage();
+        pageManager.displayTodoPage(controller.getAllTodoLists());
     });
 
     projectsBtn.addEventListener("click",() => {
-        pageManager.displayProjectPage();
+        pageManager.displayProjectPage(controller.getAllProjects());
     });
 
     homeBtn.addEventListener("click", () => {
-        pageManager.displayHomePage();
+        pageManager.displayHomePage(controller.getAllProjects(), controller.getAllTodoLists());
     });
 
+    //render initial page
+    pageManager.updateDisplay(controller);
 }

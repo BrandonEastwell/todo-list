@@ -1,31 +1,34 @@
-import TodoListObj from "./todoListObj";
-import TodoItem from "./todoItemObj";
-import ProjectObj from "./projectObj";
+import StorageService from "./storage-service";
+import ProjectManager from "./project-manager";
+import TodosManager from "./todos-manager";
 
 export default class Controller {
     constructor() {
-        this.todoLists = [];
-        this.projects = [];
+        this.storageService = new StorageService();
+        this.projectManager = new ProjectManager(this.storageService);
+        this.todoManager = new TodosManager(this.storageService);
     }
 
+    // Project Methods
     createProject(title, desc, dueDate) {
-        const project = new ProjectObj(title, desc, dueDate);
-        this.addProjectToList(project);
+        return this.projectManager.createProject(title, desc, dueDate);
     }
 
-    addProjectToList(project) {
-        this.projects.push(project);
+    getAllProjects() {
+        return this.projectManager.getAllProjects();
     }
 
+    // Todos Methods
     createTodoList(name, desc, dueDate, priority) {
-        this.todoLists.push(new TodoListObj(name, desc, dueDate, priority));
+        return this.todoManager.createTodoList(name, desc, dueDate, priority);
     }
 
-    addTodoListItem(listName) {
-        const todoItem = new TodoItem();
-        this.todoLists.find((element) => element.name === listName)
-            .addItemToList(todoItem);
+    addTodoListItem(list, todoItemData) {
+        return this.todoManager.addItemToList(list, todoItemData);
+    }
 
+    getAllTodoLists() {
+        return this.todoManager.getAllLists();
     }
 
 }

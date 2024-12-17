@@ -1,6 +1,6 @@
-import todoItem from "./todoItemObj.js";
+import todoItem from "./todo-item-class.js";
 
-export default class TodoListObj {
+export default class TodoList {
     constructor(name, desc, dueDate, priority) {
         this.items = [];
         this.name = name;
