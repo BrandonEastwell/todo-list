@@ -1,3 +1,3 @@
-export default function ProjectsPage(container) {
+export default function AllProjectsPage(container) {
 
 }

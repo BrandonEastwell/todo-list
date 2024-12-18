@@ -1,6 +1,6 @@
 import {homeProjectCard, homeTodosCard} from "./home-project-card";
 
-export default function HomePage(projects, todosList, container) {
+export default function HomePage(projects, todosList, container, eventBus) {
      const projectContainer = document.createElement("div");
      projectContainer.className = "home-card-container";
      const projectHeader = document.createElement("h2");
@@ -19,14 +19,14 @@ export default function HomePage(projects, todosList, container) {
      if (projects) {
           for (let i = 0; i < 6; i++) {
                const project = projects[i];
-               project ? projectContainer.appendChild(homeProjectCard(project)) : null;
+               project && projectContainer.appendChild(homeProjectCard(project, eventBus));
           }
      }
 
      if (todosList) {
           for (let i = 0; i < 6; i++) {
                const todo = todosList[i];
-               todo ? todosContainer.appendChild(homeTodosCard(todo)) : null;
+               todo && todosContainer.appendChild(homeTodosCard(todo, eventBus));
           }
      }
 

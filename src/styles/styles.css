@@ -40,18 +40,30 @@ nav {
 
 .form-container {
     background-color: whitesmoke;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 25px 1fr;
     gap: 10px;
     border-radius: 10px;
-    height: 60vh;
+    height: 90%;
     width: 40vw;
     position: fixed;
-    bottom: 30%;
+    bottom: 5%;
     left: 30%;
-    padding: 25px;
+    padding: 10px;
+    overflow: hidden;
+}
+
+#exit-btn {
+    width: 25px;
+    height: 25px;
+    justify-self: right;
+}
+
+#todo-list-form {
+    height: 100%;
+    width: 80%;
+    justify-items: center;
+    justify-self: center;
 }
 
 .form-row {
@@ -59,12 +71,16 @@ nav {
     display: grid;
     margin-top: 10px;
     margin-bottom: 10px;
-    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 2fr;
+    font-size: 12px;
 }
 
 .form-submit-row {
+    font-size: 12px;
     width: 25%;
     display: grid;
-    margin: 25px auto auto auto
-;
+}
+
+.todo-lists-container {
+
 }

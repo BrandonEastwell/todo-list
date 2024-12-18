@@ -1,11 +1,13 @@
 import Controller from "./controller";
 import FormManager from "./form-manager";
 import PageManager from "./page-manager";
+import EventBus from "./event-bus";
 
 export default function DOM() {
+    const eventBus = new EventBus();
     const controller = new Controller();
     const contentContainer = document.getElementById('content');
-    const pageManager = new PageManager(contentContainer);
+    const pageManager = new PageManager(contentContainer, eventBus);
     const formManager = new FormManager(controller, pageManager);
 
     const addListBtn = document.getElementById('add-todo-btn');
@@ -25,11 +27,11 @@ export default function DOM() {
 
     //addListItemBtn.addEventListener("click", displayForm);
     todosBtn.addEventListener("click", () => {
-        pageManager.displayTodoPage(controller.getAllTodoLists());
+        pageManager.displayAllTodosPage(controller.getAllTodoLists());
     });
 
     projectsBtn.addEventListener("click",() => {
-        pageManager.displayProjectPage(controller.getAllProjects());
+        pageManager.displayAllProjectPage(controller.getAllProjects());
     });
 
     homeBtn.addEventListener("click", () => {

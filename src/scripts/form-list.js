@@ -4,9 +4,22 @@ export default function () {
         return; // Don't create duplicate forms
     }
 
-    //Create container
+    // Create container
     const container = document.createElement('div');
     container.className = "form-container";
+
+    // Create EXIT button
+    const exitBtn = document.createElement('button');
+    exitBtn.id = 'exit-btn';
+    exitBtn.textContent = 'X';
+
+    exitBtn.addEventListener("click", () => {
+       container.remove();
+    });
+
+    // Create form title
+    const formTitle = document.createElement('h2');
+    formTitle.textContent = 'NEW TODO LIST';
 
     // Create form element
     const form = document.createElement('form');
@@ -88,7 +101,7 @@ export default function () {
     submitButton.type = 'submit';
     submitButton.id = 'submit';
     submitButton.name = 'submit';
-    submitButton.textContent = 'SUBMIT';
+    submitButton.textContent = 'CREATE';
 
 
     // Append all elements to form
@@ -102,12 +115,14 @@ export default function () {
     priorityRow.appendChild(prioritySelect);
     submitRow.appendChild(submitButton);
 
+    form.appendChild(formTitle);
     form.appendChild(nameRow);
     form.appendChild(descRow);
     form.appendChild(dateRow);
     form.appendChild(priorityRow);
     form.appendChild(submitRow);
 
+    container.appendChild(exitBtn);
     container.appendChild(form);
 
     return container;

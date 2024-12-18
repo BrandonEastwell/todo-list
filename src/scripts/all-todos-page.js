@@ -1,3 +1,3 @@
-export default function TodosPage(container) {
+export default function AllTodosPage(container) {
 
 }

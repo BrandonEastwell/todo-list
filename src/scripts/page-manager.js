@@ -1,33 +1,51 @@
-import todoPage from "./todos-page";
-import projectPage from "./projects-page";
+import allTodosPage from "./all-todos-page";
+import allProjectsPage from "./all-projects-page";
 import homePage from "./home-page";
 
 export default class PageManager {
-    constructor(contentContainer) {
+    constructor(contentContainer, eventBus) {
         this.container = contentContainer;
+        this.eventBus = eventBus;
         this.currentPage = "home";
+
+        this.eventBus.subscribe('displayTodoPage', (todoList) => {
+           this.displayTodoPage(todoList);
+        });
+
+        this.eventBus.subscribe('displayProjectPage', (project) => {
+            this.displayProjectPage(project);
+        });
     }
 
     clearContainerContent() {
         this.container.replaceChildren();
     }
 
-    displayTodoPage(todos) {
+    displayAllTodosPage(todos) {
         this.clearContainerContent();
-        todoPage(todos, this.container);
+        allTodosPage(todos, this.container);
         this.currentPage = "todo";
     }
 
-    displayProjectPage(projects) {
+    displayAllProjectPage(projects) {
         this.clearContainerContent();
-        projectPage(projects, this.container);
+        allProjectsPage(projects, this.container);
         this.currentPage = "project";
     }
 
     displayHomePage(projects, todos) {
         this.clearContainerContent();
-        homePage(projects, todos, this.container);
+        homePage(projects, todos, this.container, this.eventBus);
         this.currentPage = "home";
+    }
+
+    displayTodoPage(todoList) {
+        this.clearContainerContent();
+
+    }
+
+    displayProjectPage(project) {
+
     }
 
     updateDisplay(controller) {
@@ -37,10 +55,10 @@ export default class PageManager {
                 this.displayHomePage(controller.getAllProjects(), controller.getAllTodoLists());
                 break;
             case "project":
-                this.displayProjectPage(controller.getAllProjects());
+                this.displayAllProjectPage(controller.getAllProjects());
                 break;
             case "todo":
-                this.displayTodoPage(controller.getAllTodoLists());
+                this.displayAllTodosPage(controller.getAllTodoLists());
                 break;
         }
     }
