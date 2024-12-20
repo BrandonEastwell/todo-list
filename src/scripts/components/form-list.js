@@ -1,7 +1,36 @@
-export default function () {
+// Form configuration object
+const FORM_TYPES = {
+    TODO_LIST: {
+        id: 'todo-list-form',
+        title: 'NEW TODO LIST',
+        submitText: 'CREATE'
+    },
+    PROJECT: {
+        id: 'todo-list-form',
+        title: 'NEW PROJECT',
+        submitText: 'CREATE'
+    },
+    TASK: {
+        id: 'todo-list-form',
+        title: 'NEW TASK',
+        submitText: 'CREATE'
+    },
+    EDIT_TASK: {
+        id: 'todo-list-form',
+        title: 'EDIT TASK',
+        submitText: 'SAVE'
+    }
+};
+
+function createForm(formType) {
     // Check if form already exists
     if (document.getElementById('todo-list-form')) {
-        return; // Don't create duplicate forms
+        return;
+    }
+
+    const config = FORM_TYPES[formType];
+    if (!config) {
+        throw new Error(`Unknown form type: ${formType}`);
     }
 
     // Create container
@@ -14,22 +43,21 @@ export default function () {
     exitBtn.textContent = 'X';
 
     exitBtn.addEventListener("click", () => {
-       container.remove();
+        container.remove();
     });
 
     // Create form title
     const formTitle = document.createElement('h2');
-    formTitle.textContent = 'NEW TODO LIST';
+    formTitle.textContent = config.title;
 
-    // Create form element
+    // Create form
     const form = document.createElement('form');
-    form.id = 'todo-list-form';
+    form.id = config.id;
 
     // Create name row
     const nameRow = document.createElement("div");
     nameRow.className = "form-row";
 
-    // Create name input row
     const nameLabel = document.createElement('label');
     nameLabel.htmlFor = 'name';
     nameLabel.textContent = 'Name';
@@ -45,7 +73,6 @@ export default function () {
     const descRow = document.createElement("div");
     descRow.className = "form-row";
 
-    // Create description input
     const descLabel = document.createElement('label');
     descLabel.htmlFor = 'desc';
     descLabel.textContent = 'Description';
@@ -60,7 +87,6 @@ export default function () {
     const dateRow = document.createElement("div");
     dateRow.className = "form-row";
 
-    // Create date input
     const dateLabel = document.createElement('label');
     dateLabel.htmlFor = 'date';
     dateLabel.textContent = 'Date';
@@ -74,7 +100,6 @@ export default function () {
     const priorityRow = document.createElement("div");
     priorityRow.className = "form-row";
 
-    // Create priority select
     const priorityLabel = document.createElement('label');
     priorityLabel.htmlFor = 'priority';
     priorityLabel.textContent = 'Priority';
@@ -96,13 +121,11 @@ export default function () {
     const submitRow = document.createElement("div");
     submitRow.className = "form-submit-row";
 
-    // Create submit button
     const submitButton = document.createElement('button');
     submitButton.type = 'submit';
     submitButton.id = 'submit';
     submitButton.name = 'submit';
-    submitButton.textContent = 'CREATE';
-
+    submitButton.textContent = config.submitText;
 
     // Append all elements to form
     nameRow.appendChild(nameLabel);
@@ -115,6 +138,7 @@ export default function () {
     priorityRow.appendChild(prioritySelect);
     submitRow.appendChild(submitButton);
 
+    // Build form
     form.appendChild(formTitle);
     form.appendChild(nameRow);
     form.appendChild(descRow);
@@ -126,4 +150,21 @@ export default function () {
     container.appendChild(form);
 
     return container;
+}
+
+// Export the form creation functions
+export function createNewTodoListForm() {
+    return createForm('TODO_LIST');
+}
+
+export function createNewProjectForm() {
+    return createForm('PROJECT');
+}
+
+export function createNewTaskForm() {
+    return createForm('TASK');
+}
+
+export function createEditTaskForm() {
+    return createForm('EDIT_TASK');
 }

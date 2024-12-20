@@ -1,6 +1,8 @@
-import {homeProjectCard, homeTodosCard} from "./home-project-card";
+import {homeProjectCard, homeTodosCard} from "../components/home-project-card";
 
 export default function HomePage(projects, todosList, container, eventBus) {
+     container.className = "content-layout";
+
      const projectContainer = document.createElement("div");
      projectContainer.className = "home-card-container";
      const projectHeader = document.createElement("h2");
@@ -12,9 +14,6 @@ export default function HomePage(projects, todosList, container, eventBus) {
      const todosHeader = document.createElement("h2");
      todosHeader.textContent = "My Todos";
      todosContainer.appendChild(todosHeader);
-
-     console.log(projects);
-     console.log(todosList);
 
      if (projects) {
           for (let i = 0; i < 6; i++) {

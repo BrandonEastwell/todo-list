@@ -1,5 +1,5 @@
-import TodoList from "./todo-list-class";
-import TodoItem from "./todo-item-class";
+import TodoList from "../class objects/todo-list-class";
+import TodoTask from "../class objects/todo-item-class";
 
 export default class TodosManager {
     constructor(storageService) {
@@ -17,10 +17,9 @@ export default class TodosManager {
         this.saveTodoLists();
     }
 
-    addItemToList(listName) {
-        const todoItem = new TodoItem();
-        this.todoLists.find((element) => element.name === listName)
-            .addItemToList(todoItem);
+    addTaskToList(todoList, name, desc, dueDate, priority) {
+        this.todoLists.find((element) => element === todoList)
+            .addItemToList(new TodoTask(name, desc, dueDate, priority));
         this.saveTodoLists();
     }
 

@@ -1,4 +1,4 @@
-import Project from "./project-class";
+import Project from "../class objects/project-class";
 
 export default class ProjectManager {
     constructor(storageService) {
@@ -11,8 +11,8 @@ export default class ProjectManager {
         return projects.map(project => Object.assign(new Project(), project));
     }
 
-    createProject(title, desc, dueDate) {
-        const project = new Project(title, desc, dueDate);
+    createProject(title, desc, dueDate, priority) {
+        const project = new Project(title, desc, dueDate, priority);
         this.addProjectToList(project);
     }
 

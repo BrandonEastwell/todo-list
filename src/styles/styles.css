@@ -23,15 +23,20 @@ nav {
     grid-column: 2 / 3;
     background-color: whitesmoke;
     overflow-y: scroll;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
     padding: 20px;
-    gap: 20px;
+}
+
+.content-layout {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
 }
 
 .home-card-container {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-row: 2 / 3;
     height: 100%;
     padding: 20px;
     background-color: lightgrey;
@@ -82,5 +87,6 @@ nav {
 }
 
 .todo-lists-container {
-
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(125px, 200px));
 }

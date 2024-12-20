@@ -1,6 +1,7 @@
 import StorageService from "./storage-service";
 import ProjectManager from "./project-manager";
 import TodosManager from "./todos-manager";
+import TodoTask from "../class objects/todo-item-class";
 
 export default class Controller {
     constructor() {
@@ -10,8 +11,8 @@ export default class Controller {
     }
 
     // Project Methods
-    createProject(title, desc, dueDate) {
-        return this.projectManager.createProject(title, desc, dueDate);
+    createProject(title, desc, dueDate, priority) {
+        return this.projectManager.createProject(title, desc, dueDate, priority);
     }
 
     getAllProjects() {
@@ -23,8 +24,8 @@ export default class Controller {
         return this.todoManager.createTodoList(name, desc, dueDate, priority);
     }
 
-    addTodoListItem(list, todoItemData) {
-        return this.todoManager.addItemToList(list, todoItemData);
+    createTodoTask(list, name, desc, dueDate, priority) {
+        return this.todoManager.addTaskToList(list, name, desc, dueDate, priority);
     }
 
     getAllTodoLists() {

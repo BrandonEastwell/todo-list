@@ -1,12 +1,15 @@
-import allTodosPage from "./all-todos-page";
-import allProjectsPage from "./all-projects-page";
-import homePage from "./home-page";
+import createAllTodosPage from "../pages/all-todos-page";
+import createAllProjectsPage from "../pages/all-projects-page";
+import createHomePage from "../pages/home-page";
+import createTodoListPage from "../pages/todo-list-page";
 
 export default class PageManager {
     constructor(contentContainer, eventBus) {
         this.container = contentContainer;
         this.eventBus = eventBus;
         this.currentPage = "home";
+        this.currentList = undefined;
+        this.currentProject = undefined;
 
         this.eventBus.subscribe('displayTodoPage', (todoList) => {
            this.displayTodoPage(todoList);
@@ -23,29 +26,33 @@ export default class PageManager {
 
     displayAllTodosPage(todos) {
         this.clearContainerContent();
-        allTodosPage(todos, this.container);
-        this.currentPage = "todo";
+        createAllTodosPage(todos, this.container);
+        this.currentPage = "allTodos";
     }
 
     displayAllProjectPage(projects) {
         this.clearContainerContent();
-        allProjectsPage(projects, this.container);
-        this.currentPage = "project";
+        createAllProjectsPage(projects, this.container);
+        this.currentPage = "allProjects";
     }
 
     displayHomePage(projects, todos) {
         this.clearContainerContent();
-        homePage(projects, todos, this.container, this.eventBus);
+        createHomePage(projects, todos, this.container, this.eventBus);
         this.currentPage = "home";
     }
 
     displayTodoPage(todoList) {
         this.clearContainerContent();
-
+        createTodoListPage(todoList, this.container, this.eventBus);
+        this.currentList = todoList;
+        this.currentPage = "todolist"
     }
 
     displayProjectPage(project) {
 
+        this.currentProject = project;
+        this.currentPage = "project"
     }
 
     updateDisplay(controller) {
@@ -54,11 +61,17 @@ export default class PageManager {
             case "home":
                 this.displayHomePage(controller.getAllProjects(), controller.getAllTodoLists());
                 break;
-            case "project":
+            case "allProjects":
                 this.displayAllProjectPage(controller.getAllProjects());
                 break;
-            case "todo":
+            case "allTodos":
                 this.displayAllTodosPage(controller.getAllTodoLists());
+                break;
+            case "todolist":
+                this.displayTodoPage(this.currentList);
+                break;
+            case "project":
+                this.displayTodoPage(this.currentProject);
                 break;
         }
     }

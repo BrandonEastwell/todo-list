@@ -9,7 +9,6 @@ function homeProjectCard(project, eventBus) {
 
     // Append elements to container
     container.appendChild(title);
-
     return container;
 }
 
@@ -24,7 +23,6 @@ function homeTodosCard(todos, eventBus) {
 
     // Append elements to container
     container.appendChild(title);
-
     return container;
 }
 

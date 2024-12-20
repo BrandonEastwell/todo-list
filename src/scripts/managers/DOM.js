@@ -8,7 +8,7 @@ export default function DOM() {
     const controller = new Controller();
     const contentContainer = document.getElementById('content');
     const pageManager = new PageManager(contentContainer, eventBus);
-    const formManager = new FormManager(controller, pageManager);
+    const formManager = new FormManager(controller, pageManager, eventBus);
 
     const addListBtn = document.getElementById('add-todo-btn');
     //const addListItemBtn = document.getElementById();
