@@ -53,8 +53,7 @@ function createTaskElements(tasks, eventBus, container) {
         taskHeader.textContent = task.name;
         taskContainer.appendChild(taskHeader);
         container.appendChild(taskContainer);
-
-        taskContainer.addEventListener('click', (task) => {
+        taskContainer.addEventListener('click', () => {
             eventBus.publish('editTaskForm', task);
         });
     }

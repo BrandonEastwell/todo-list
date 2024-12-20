@@ -52,11 +52,11 @@ export default class FormManager {
     }
 
     displayEditTaskForm(task) {
-        const formContainer = createEditTaskForm();
+        const formContainer = createEditTaskForm(task);
         if (formContainer) {
             const form = formContainer.querySelector('#todo-list-form');
             form.addEventListener("submit", (event) => {
-                this.handleTaskSubmit(event, task);
+                this.handleEditTaskSubmit(event, task);
             });
             document.body.appendChild(formContainer);
         }

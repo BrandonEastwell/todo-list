@@ -1,38 +1,8 @@
-// Form configuration object
-import {createEditForm} from "./task-edit-form";
-
-const FORM_TYPES = {
-    TODO_LIST: {
-        id: 'todo-list-form',
-        title: 'NEW TODO LIST',
-        submitText: 'CREATE'
-    },
-    PROJECT: {
-        id: 'todo-list-form',
-        title: 'NEW PROJECT',
-        submitText: 'CREATE'
-    },
-    TASK: {
-        id: 'todo-list-form',
-        title: 'NEW TASK',
-        submitText: 'CREATE'
-    },
-    EDIT_TASK: {
-        id: 'todo-list-form',
-        title: 'EDIT TASK',
-        submitText: 'SAVE TASK'
-    }
-};
-
-function createForm(formType) {
+function createEditForm(task) {
+    console.log(task)
     // Check if form already exists
     if (document.getElementById('todo-list-form')) {
         return;
-    }
-
-    const config = FORM_TYPES[formType];
-    if (!config) {
-        throw new Error(`Unknown form type: ${formType}`);
     }
 
     // Create container
@@ -50,11 +20,11 @@ function createForm(formType) {
 
     // Create form title
     const formTitle = document.createElement('h2');
-    formTitle.textContent = config.title;
+    formTitle.textContent = `EDIT TASK ${task.name}`;
 
     // Create form
     const form = document.createElement('form');
-    form.id = config.id;
+    form.id = 'todo-list-form';
 
     // Create name row
     const nameRow = document.createElement("div");
@@ -69,7 +39,7 @@ function createForm(formType) {
     nameInput.name = 'name';
     nameInput.id = 'name';
     nameInput.placeholder = 'Name';
-    nameInput.required = true;
+    nameInput.value = task.name;
 
     // Create desc row
     const descRow = document.createElement("div");
@@ -83,7 +53,7 @@ function createForm(formType) {
     descInput.type = 'text';
     descInput.name = 'desc';
     descInput.id = 'desc';
-    descInput.placeholder = 'Description';
+    descInput.value = task.desc;
 
     // Create date row
     const dateRow = document.createElement("div");
@@ -97,6 +67,7 @@ function createForm(formType) {
     dateInput.type = 'date';
     dateInput.name = 'date';
     dateInput.id = 'date';
+    dateInput.value = task.dueDate;
 
     // Create priority row
     const priorityRow = document.createElement("div");
@@ -109,7 +80,7 @@ function createForm(formType) {
     const prioritySelect = document.createElement('select');
     prioritySelect.id = 'priority';
     prioritySelect.name = 'priority';
-    prioritySelect.required = true;
+    prioritySelect.value = task.priority;
 
     const priorities = ['Very High', 'High', 'Normal', 'Low', 'Very Low'];
     priorities.forEach(priority => {
@@ -117,6 +88,27 @@ function createForm(formType) {
         option.value = priority;
         option.textContent = priority;
         prioritySelect.appendChild(option);
+    });
+
+    // Create state row
+    const stateRow = document.createElement("div");
+    stateRow.className = "form-row";
+
+    const stateLabel = document.createElement('label');
+    stateLabel.htmlFor = 'state';
+    stateLabel.textContent = 'state';
+
+    const stateSelect = document.createElement('select');
+    stateSelect.id = 'state';
+    stateSelect.name = 'state';
+    stateSelect.value = task.state;
+
+    const states = ['Backlog', 'Selected For Work', 'Completed'];
+    states.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.textContent = state;
+        stateSelect.appendChild(option);
     });
 
     // Create submit row
@@ -127,7 +119,13 @@ function createForm(formType) {
     submitButton.type = 'submit';
     submitButton.id = 'submit';
     submitButton.name = 'submit';
-    submitButton.textContent = config.submitText;
+    submitButton.textContent = 'SAVE TASK';
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'submit';
+    deleteButton.id = 'delete';
+    deleteButton.name = 'delete';
+    deleteButton.textContent = 'DELETE TASK';
 
     // Append all elements to form
     nameRow.appendChild(nameLabel);
@@ -138,7 +136,10 @@ function createForm(formType) {
     dateRow.appendChild(dateInput);
     priorityRow.appendChild(priorityLabel);
     priorityRow.appendChild(prioritySelect);
+    stateRow.appendChild(stateLabel);
+    stateRow.appendChild(stateSelect);
     submitRow.appendChild(submitButton);
+    submitRow.appendChild(deleteButton);
 
     // Build form
     form.appendChild(formTitle);
@@ -146,6 +147,7 @@ function createForm(formType) {
     form.appendChild(descRow);
     form.appendChild(dateRow);
     form.appendChild(priorityRow);
+    form.appendChild(stateRow);
     form.appendChild(submitRow);
 
     container.appendChild(exitBtn);
@@ -154,19 +156,4 @@ function createForm(formType) {
     return container;
 }
 
-// Export the form creation functions
-export function createNewTodoListForm() {
-    return createForm('TODO_LIST');
-}
-
-export function createNewProjectForm() {
-    return createForm('PROJECT');
-}
-
-export function createNewTaskForm() {
-    return createForm('TASK');
-}
-
-export function createEditTaskForm(task) {
-    return createEditForm(task);
-}
+export {createEditForm}
