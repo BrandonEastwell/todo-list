@@ -16,11 +16,19 @@ export default class TodoList {
     }
 
     getSelectedForWork() {
-
+        const result = [];
+        for (const task of this.tasks) {
+            task.state === "SELECTED FOR WORK" && result.push(task);
+        }
+        return result;
     }
 
     getCompleted() {
-
+        const result = [];
+        for (const task of this.tasks) {
+            task.state === "COMPLETED" && result.push(task);
+        }
+        return result;
     }
 
     sortTodoList() {

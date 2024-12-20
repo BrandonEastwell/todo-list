@@ -20,36 +20,43 @@ export default function TodoListPage(todosList, container, eventBus) {
     backlogHeader.textContent = 'BACKLOG';
 
     backlogContainer.appendChild(backlogHeader);
-
-    const backlogTasks = todosList.getBacklog();
-    for (const task of backlogTasks) {
-        const taskContainer = document.createElement("div");
-        const taskHeader = document.createElement("h3");
-        taskHeader.textContent = task.name;
-        taskContainer.appendChild(taskHeader);
-        backlogContainer.appendChild(taskContainer);
-
-        taskContainer.addEventListener('click', (task) => {
-            eventBus.publish('editTaskForm', task);
-        });
-    }
+    createTaskElements(todosList.getBacklog(), eventBus, backlogContainer);
 
     const workingContainer = document.createElement("div");
     workingContainer.className = "home-card-container";
     const workingHeader = document.createElement("h2");
     workingHeader.textContent = 'SELECTED FOR WORK'
 
+    workingContainer.appendChild(workingHeader);
+    createTaskElements(todosList.getSelectedForWork(), eventBus, workingContainer);
+
     const completedContainer = document.createElement("div");
     completedContainer.className = "home-card-container";
     const completedHeader = document.createElement("h2");
     completedHeader.textContent = 'COMPLETED';
 
+    completedContainer.appendChild(completedHeader);
+    createTaskElements(todosList.getCompleted(), eventBus, completedHeader);
+
     headerContainer.appendChild(mainHeader);
     headerContainer.appendChild(addItemBtn);
-    workingContainer.appendChild(workingHeader);
-    completedContainer.appendChild(completedHeader);
     container.appendChild(headerContainer);
     container.appendChild(backlogContainer);
     container.appendChild(workingContainer);
     container.appendChild(completedContainer);
+}
+
+function createTaskElements(tasks, eventBus, container) {
+    for (const task of tasks) {
+        const taskContainer = document.createElement("div");
+        const taskHeader = document.createElement("h3");
+        taskHeader.textContent = task.name;
+        taskContainer.appendChild(taskHeader);
+        container.appendChild(taskContainer);
+
+        taskContainer.addEventListener('click', (task) => {
+            eventBus.publish('editTaskForm', task);
+        });
+    }
+
 }
