@@ -87,7 +87,7 @@ export default class FormManager {
 
         //page refresh
         this.pageManager.updateDisplay(this.controller);
-        console.log("todo form submitted...");
+        console.log("todo created...");
     }
 
     handleProjectSubmit(event) {
@@ -102,7 +102,7 @@ export default class FormManager {
 
         //page refresh
         this.pageManager.updateDisplay(this.controller);
-        console.log("project form submitted...");
+        console.log("project created...");
     }
 
     handleTaskSubmit(event, todoList) {
@@ -118,12 +118,13 @@ export default class FormManager {
 
         //page refresh
         this.pageManager.updateDisplay(this.controller);
-        console.log("task form submitted...");
+        console.log("task created...");
     }
 
     handleEditTaskSubmit(event, task) {
         event.preventDefault();
         const data = new FormData(event.target);
+        console.log(task)
         task.editTaskProps(
             data.get("name"),
             data.get("desc"),
@@ -131,16 +132,17 @@ export default class FormManager {
             data.get("state"),
             data.get("priority")
         );
+        console.log(task)
+
         this.controller.saveTodoLists();
 
         //page refresh
         this.pageManager.updateDisplay(this.controller);
-        console.log("task form submitted...");
+        console.log("task edit submitted...");
     }
 
     handleEditTaskDelete(event, task, todoList) {
         event.preventDefault();
-        console.log(todoList);
         todoList.deleteItemFromList(task);
         this.controller.saveTodoLists();
 

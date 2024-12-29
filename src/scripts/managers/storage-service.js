@@ -1,3 +1,6 @@
+import TodoTask from "../class objects/todo-item-class";
+import TodoList from "../class objects/todo-list-class";
+
 export default class StorageService {
     constructor() {
         this.PROJECTS_KEY = "PROJECTS";
@@ -21,6 +24,37 @@ export default class StorageService {
                 storage.length !== 0
             );
         }
+    }
+
+    rehydrateTasks(taskData) {
+        // Convert plain object back to TodoTask instance
+        const task = new TodoTask(
+            taskData.name,
+            taskData.desc,
+            taskData.dueDate,
+            taskData.priority
+        );
+        task.state = taskData.state;
+        return task;
+    }
+
+    rehydrateTodos(todoLists) {
+        const rehydratedTodos = []
+        for (const list of todoLists) {
+            const todo = new TodoList(
+                list.name,
+                list.desc,
+                list.dueDate,
+                list.priority
+            )
+            const tasks = [];
+            for (const task of list.tasks) {
+                tasks.push(this.rehydrateTasks(task));
+            }
+            todo.tasks = tasks;
+            rehydratedTodos.push(todo)
+        }
+        return rehydratedTodos;
     }
 
     saveProjectsToLocalStorage(projects) {
@@ -50,8 +84,15 @@ export default class StorageService {
 
     getTodosFromLocalStorage() {
         if (this.storageAvailable("localStorage")) {
-            const todos = window.localStorage.getItem(this.TODOS_KEY);
-            return todos ? JSON.parse(todos) : []
+            const savedTodos = window.localStorage.getItem(this.TODOS_KEY);
+            if (savedTodos) {
+                const todosData = JSON.parse(savedTodos);
+                console.log(todosData)
+                console.log(this.rehydrateTodos(todosData))
+                return this.rehydrateTodos(todosData);
+            } else {
+                return [];
+            }
         } else {
             console.log("local storage unavailable...")
         }
