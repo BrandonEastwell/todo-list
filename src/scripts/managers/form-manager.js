@@ -19,15 +19,18 @@ export default class FormManager {
             this.displayTaskForm(todoList);
         });
 
-        this.eventBus.subscribe('editTaskForm', (task) => {
-            this.displayEditTaskForm(task);
-        })
+        this.eventBus.subscribe('displayEditTaskForm', ({ task, todoList }) => {
+            this.displayEditTaskForm(task, todoList);
+        });
     }
 
     displayTodoForm() {
         const form = createNewTodoListForm();
         if (form) {
-            form.addEventListener("submit", this.handleTodoSubmit.bind(this));
+            form.addEventListener("submit", (event) => {
+                this.handleTodoSubmit(event);
+                form.remove();
+            });
             document.body.appendChild(form);
         }
     }
@@ -35,7 +38,10 @@ export default class FormManager {
     displayProjectForm() {
         const form = createNewProjectForm();
         if (form) {
-            form.addEventListener("submit", this.handleProjectSubmit.bind(this));
+            form.addEventListener("submit", (event) => {
+                this.handleProjectSubmit(event);
+                form.remove();
+            });
             document.body.appendChild(form);
         }
     }
@@ -46,17 +52,24 @@ export default class FormManager {
             const form = formContainer.querySelector('#todo-list-form');
             form.addEventListener("submit", (event) => {
                 this.handleTaskSubmit(event, todoList);
+                formContainer.remove();
             });
             document.body.appendChild(formContainer);
         }
     }
 
-    displayEditTaskForm(task) {
+    displayEditTaskForm(task, todoList) {
         const formContainer = createEditTaskForm(task);
         if (formContainer) {
             const form = formContainer.querySelector('#todo-list-form');
             form.addEventListener("submit", (event) => {
                 this.handleEditTaskSubmit(event, task);
+                formContainer.remove();
+            });
+            const delBtn = form.querySelector('#delete');
+            delBtn.addEventListener("click", (event) => {
+                this.handleEditTaskDelete(event, task, todoList);
+                formContainer.remove();
             });
             document.body.appendChild(formContainer);
         }
@@ -111,10 +124,28 @@ export default class FormManager {
     handleEditTaskSubmit(event, task) {
         event.preventDefault();
         const data = new FormData(event.target);
-
+        task.editTaskProps(
+            data.get("name"),
+            data.get("desc"),
+            data.get("dueDate"),
+            data.get("state"),
+            data.get("priority")
+        );
+        this.controller.saveTodoLists();
 
         //page refresh
         this.pageManager.updateDisplay(this.controller);
         console.log("task form submitted...");
+    }
+
+    handleEditTaskDelete(event, task, todoList) {
+        event.preventDefault();
+        console.log(todoList);
+        todoList.deleteItemFromList(task);
+        this.controller.saveTodoLists();
+
+        //page refresh
+        this.pageManager.updateDisplay(this.controller);
+        console.log("task deleted...");
     }
 }

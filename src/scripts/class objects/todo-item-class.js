@@ -16,4 +16,12 @@ export default class TodoTask {
     getTaskState() {
         return this.state;
     }
+
+    editTaskProps(name, desc, dueDate, state, priority) {
+        this.name = name;
+        this.desc = desc;
+        this.dueDate = dueDate;
+        this.state = state;
+        this.priority = priority;
+    }
 }

@@ -41,4 +41,8 @@ export default class TodoList {
         this.tasks.push(task);
         this.sortTodoList();
     }
+
+    deleteItemFromList(task) {
+        this.tasks = this.tasks.filter((item) => item !== task);
+    }
 }

@@ -1,5 +1,4 @@
 function createEditForm(task) {
-    console.log(task)
     // Check if form already exists
     if (document.getElementById('todo-list-form')) {
         return;
@@ -122,7 +121,6 @@ function createEditForm(task) {
     submitButton.textContent = 'SAVE TASK';
 
     const deleteButton = document.createElement('button');
-    deleteButton.type = 'submit';
     deleteButton.id = 'delete';
     deleteButton.name = 'delete';
     deleteButton.textContent = 'DELETE TASK';

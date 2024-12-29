@@ -32,4 +32,8 @@ export default class Controller {
         return this.todoManager.getAllLists();
     }
 
+    saveTodoLists() {
+        this.todoManager.saveTodoLists();
+    }
+
 }
