@@ -5,7 +5,7 @@ import EventBus from "./event-bus";
 
 export default function DOM() {
     const eventBus = new EventBus();
-    const controller = new Controller();
+    const controller = new Controller(eventBus);
     const contentContainer = document.getElementById('content');
     const pageManager = new PageManager(contentContainer, eventBus);
     const formManager = new FormManager(controller, pageManager, eventBus);

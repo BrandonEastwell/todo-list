@@ -3,17 +3,32 @@ export default function TodoListPage(todoList, container, eventBus) {
 
     const headerContainer= document.createElement("div");
     headerContainer.className = "";
+    headerContainer.style.gridColumn = "1 / 4";
+    headerContainer.style.display = "grid";
+    headerContainer.style.gridTemplateColumns = "auto auto auto"
 
-    const mainHeader = document.createElement("h1");
-    mainHeader.textContent = todoList.name;
+    const listName = document.createElement("h1");
+    listName.textContent = todoList.name;
+    listName.style.gridColumn = "1 / 2"
 
     const addItemBtn = document.createElement("button");
     addItemBtn.textContent = "+ Add Task";
 
     addItemBtn.addEventListener("click", () => {
         eventBus.publish('displayTaskForm', todoList);
-    })
+    });
 
+    const deleteListBtn = document.createElement("button");
+    deleteListBtn.textContent = `delete ${todoList.name}`;
+
+    deleteListBtn.addEventListener ("click", () => {
+        eventBus.publish('displayListDeleteForm', todoList);
+    });
+
+    headerContainer.appendChild(listName);
+    headerContainer.appendChild(deleteListBtn);
+    headerContainer.appendChild(addItemBtn);
+    container.appendChild(headerContainer);
 
     // backlog tasks
     const backlogContainer = document.createElement("div");
@@ -42,12 +57,8 @@ export default function TodoListPage(todoList, container, eventBus) {
     completedHeader.textContent = 'COMPLETED';
 
     completedContainer.appendChild(completedHeader);
-    createTaskElements(todoList.getCompleted(), todoList, eventBus, completedHeader);
+    createTaskElements(todoList.getCompleted(), todoList, eventBus, completedContainer);
 
-
-    headerContainer.appendChild(mainHeader);
-    headerContainer.appendChild(addItemBtn);
-    container.appendChild(headerContainer);
     container.appendChild(backlogContainer);
     container.appendChild(selectedForWorkContainer);
     container.appendChild(completedContainer);
@@ -64,5 +75,4 @@ function createTaskElements(tasks, todoList, eventBus, container) {
             eventBus.publish('displayEditTaskForm', { task, todoList });
         });
     }
-
 }

@@ -2,7 +2,7 @@ import {
     createEditTaskForm,
     createNewProjectForm,
     createNewTaskForm,
-    createNewTodoListForm
+    createNewTodoListForm, createTodoDeleteForm
 } from "../components/form-list";
 
 export default class FormManager {
@@ -21,6 +21,10 @@ export default class FormManager {
 
         this.eventBus.subscribe('displayEditTaskForm', ({ task, todoList }) => {
             this.displayEditTaskForm(task, todoList);
+        });
+
+        this.eventBus.subscribe('displayListDeleteForm', (todoList) => {
+            this.displayListDeleteForm(todoList)
         });
     }
 
@@ -69,6 +73,20 @@ export default class FormManager {
             const delBtn = form.querySelector('#delete');
             delBtn.addEventListener("click", (event) => {
                 this.handleEditTaskDelete(event, task, todoList);
+                formContainer.remove();
+            });
+            document.body.appendChild(formContainer);
+        }
+    }
+
+    displayListDeleteForm(todoList) {
+        const formContainer = createTodoDeleteForm(todoList);
+        if (formContainer) {
+            const form = formContainer.querySelector('#todo-list-form');
+            const delBtn = form.querySelector('#delete');
+            delBtn.addEventListener("click", (event) => {
+                this.eventBus.publish('deleteTodoList', todoList);
+                this.pageManager.updateDisplay(this.controller, "home"); //reset to default home
                 formContainer.remove();
             });
             document.body.appendChild(formContainer);

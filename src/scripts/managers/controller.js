@@ -1,13 +1,13 @@
 import StorageService from "./storage-service";
 import ProjectManager from "./project-manager";
 import TodosManager from "./todos-manager";
-import TodoTask from "../class objects/todo-item-class";
 
 export default class Controller {
-    constructor() {
+    constructor(eventBus) {
+        this.eventBus = eventBus;
         this.storageService = new StorageService();
-        this.projectManager = new ProjectManager(this.storageService);
-        this.todoManager = new TodosManager(this.storageService);
+        this.projectManager = new ProjectManager(this.storageService, this.eventBus);
+        this.todoManager = new TodosManager(this.storageService, this.eventBus);
     }
 
     // Project Methods

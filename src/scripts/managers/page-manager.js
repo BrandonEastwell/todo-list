@@ -55,9 +55,9 @@ export default class PageManager {
         this.currentPage = "project"
     }
 
-    updateDisplay(controller) {
+    updateDisplay(controller, page = this.currentPage) {
         this.clearContainerContent();
-        switch (this.currentPage) {
+        switch (page) {
             case "home":
                 this.displayHomePage(controller.getAllProjects(), controller.getAllTodoLists());
                 break;

@@ -1,5 +1,6 @@
 // Form configuration object
 import {createEditForm} from "./task-edit-form";
+import {todoDeleteForm} from "./todo-delete-form";
 
 const FORM_TYPES = {
     TODO_LIST: {
@@ -169,4 +170,8 @@ export function createNewTaskForm() {
 
 export function createEditTaskForm(task) {
     return createEditForm(task);
+}
+
+export function createTodoDeleteForm(todoList) {
+    return todoDeleteForm(todoList)
 }

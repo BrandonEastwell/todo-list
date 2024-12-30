@@ -8,13 +8,14 @@ export default class TodoTask {
     }
 
     setTaskState(state) {
-        if (state === "BACKLOG" || state === "SELECTED FOR WORK" || state === "COMPLETED") {
+        state = state.toLowerCase();
+        if (state === "backlog" || state === "selected for work" || state === "completed") {
             this.state = state;
         }
     }
 
     getTaskState() {
-        return this.state;
+        return this.state.toLowerCase();
     }
 
     editTaskProps(name, desc, dueDate, state, priority) {

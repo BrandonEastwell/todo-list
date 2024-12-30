@@ -1,3 +1,10 @@
+
+const LIST_STATES = {
+    BACKLOG: "backlog",
+    COMPLETED: "completed",
+    SELECTED_FOR_WORK: "selected for work"
+}
+
 export default class TodoList {
     constructor(name, desc, dueDate, priority) {
         this.tasks = [];
@@ -10,7 +17,7 @@ export default class TodoList {
     getBacklog() {
         const result = [];
         for (const task of this.tasks) {
-            task.state === "BACKLOG" && result.push(task);
+            task.getTaskState() === LIST_STATES["BACKLOG"] && result.push(task);
         }
         return result;
     }
@@ -18,7 +25,7 @@ export default class TodoList {
     getSelectedForWork() {
         const result = [];
         for (const task of this.tasks) {
-            task.state === "SELECTED FOR WORK" && result.push(task);
+            task.getTaskState() === LIST_STATES["SELECTED_FOR_WORK"] && result.push(task);
         }
         return result;
     }
@@ -26,7 +33,7 @@ export default class TodoList {
     getCompleted() {
         const result = [];
         for (const task of this.tasks) {
-            task.state === "COMPLETED" && result.push(task);
+            task.getTaskState() === LIST_STATES["COMPLETED"] && result.push(task);
         }
         return result;
     }
